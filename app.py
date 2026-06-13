@@ -53,11 +53,16 @@ vectorstore = get_vectorstore()
 NORTHWESTERN_PURPLE = "#4E2A84"
 
 CSS = f"""
-.gradio-container {{
+.gradio-container, .block, .form {{
     background-color: {NORTHWESTERN_PURPLE} !important;
 }}
 * {{
     color: #FFFFFF !important;
+    font-family: 'Poppins', 'Trebuchet MS', sans-serif !important;
+    font-size: 18px !important;
+}}
+h1 {{
+    font-size: 36px !important;
 }}
 input, textarea {{
     background-color: #FFFFFF !important;
@@ -70,10 +75,14 @@ input, textarea {{
 
 demo = gr.Interface(
     fn=answer_question,
-    inputs=gr.Textbox(label="Ask a question about Northwestern", lines=2),
+    inputs=gr.Textbox(
+        label="Ask a question about Northwestern",
+        lines=1,
+        submit_btn=True,
+    ),
     outputs=gr.Markdown(label="Answer"),
     title="The Unofficial Guide to Northwestern",
-    description="Ask questions about academics, social life, dining, housing, and more, based on real student reviews. Press Enter to submit.",
+    description="Ask questions about academics, social life, dining, housing, and more, based on real student reviews.",
     submit_btn=gr.Button("Submit", elem_id="submit-btn"),
     clear_btn=None,
     flagging_mode="never",
