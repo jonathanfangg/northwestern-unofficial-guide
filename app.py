@@ -50,13 +50,34 @@ def answer_question(query: str) -> str:
 
 vectorstore = get_vectorstore()
 
+NORTHWESTERN_PURPLE = "#4E2A84"
+
+CSS = f"""
+.gradio-container {{
+    background-color: {NORTHWESTERN_PURPLE} !important;
+}}
+* {{
+    color: #FFFFFF !important;
+}}
+input, textarea {{
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+}}
+#submit-btn {{
+    display: none !important;
+}}
+"""
+
 demo = gr.Interface(
     fn=answer_question,
     inputs=gr.Textbox(label="Ask a question about Northwestern", lines=2),
     outputs=gr.Markdown(label="Answer"),
     title="The Unofficial Guide to Northwestern",
-    description="Ask questions about academics, social life, dining, housing, and more, based on real student reviews.",
+    description="Ask questions about academics, social life, dining, housing, and more, based on real student reviews. Press Enter to submit.",
+    submit_btn=gr.Button("Submit", elem_id="submit-btn"),
+    clear_btn=None,
+    flagging_mode="never",
 )
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(css=CSS)
