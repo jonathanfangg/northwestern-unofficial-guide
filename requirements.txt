@@ -4,6 +4,8 @@ groq==0.15.0
 python-dotenv==1.0.1
 langchain-text-splitters
 langchain-core
+langchain-chroma
+langchain-huggingface
 
 # Query interface — add whichever you use for Milestone 5:
 # gradio>=6.9.0

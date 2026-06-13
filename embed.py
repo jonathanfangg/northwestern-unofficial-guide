@@ -1,6 +1,8 @@
-"""Embedding and retrieval pipeline for Northwestern Niche review chunks."""
+"""Embedding pipeline."""
 
+from langchain_chroma import Chroma
 from langchain_core.documents import Document
+from langchain_huggingface import HuggingFaceEmbeddings
 
 EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 PERSIST_DIRECTORY = "chroma_db"
@@ -22,7 +24,7 @@ def build_vectorstore(
     can be traced back to their originating review file.
 
     Args:
-        chunks: List of Document chunks to embed, typically the output of
+        chunks: List of Document chunks to embed, the output of
             chunk_documents() from ingest_and_chunk.py.
         persist_directory: Local directory where ChromaDB stores its data.
         collection_name: Name of the ChromaDB collection to create or update.
@@ -31,6 +33,15 @@ def build_vectorstore(
     Returns:
         The ChromaDB vector store instance containing the embedded chunks.
     """
+    embeddings = HuggingFaceEmbeddings(model_name=f"sentence-transformers/{embedding_model}")
+    vectorstore = Chroma(
+        collection_name=collection_name,
+        embedding_function=embeddings,
+        persist_directory=persist_directory,
+    )
+    vectorstore.reset_collection()
+    vectorstore.add_documents(chunks)
+    return vectorstore
 
 
 def load_vectorstore(
@@ -51,6 +62,12 @@ def load_vectorstore(
     Returns:
         The ChromaDB vector store instance.
     """
+    embeddings = HuggingFaceEmbeddings(model_name=f"sentence-transformers/{embedding_model}")
+    return Chroma(
+        collection_name=collection_name,
+        embedding_function=embeddings,
+        persist_directory=persist_directory,
+    )
 
 
 def retrieve(query: str, vectorstore, k: int = TOP_K) -> list[Document]:
@@ -69,6 +86,7 @@ def retrieve(query: str, vectorstore, k: int = TOP_K) -> list[Document]:
     Returns:
         A list of the k most relevant Document chunks, each with source metadata.
     """
+    return vectorstore.similarity_search(query, k=k)
 
 
 if __name__ == "__main__":

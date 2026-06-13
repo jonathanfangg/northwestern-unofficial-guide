@@ -43,13 +43,13 @@ Student reviews of Northwestern University sourced from Niche.com, covering acad
 
 ## Evaluation Plan
 
-| #   | Question                                                                    | Expected answer                                                                                  |
-| --- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| 1   | What do people say about weather during winter?                             | It gets really cold and depressing.                                                              |
-| 2   | What do students say about the quarter system?                              | It's fast paced but opportunity for more classes.                                                |
-| 3   | What is the difference in social scene between North and South campus?      | North campus is louder and has more parties and South campus is quieter.                         |
-| 4   | What do students say about the cost of attending Northwestern?              | It is very expensive. Some felt it was worth it and other's didn't.                              |
-| 5   | What do students say about professor accessibility and willingness to help? | Professors are generally caring and willing to help students academically and with career goals. |
+| #   | Question                                                               | Expected answer                                                                                  |
+| --- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| 1   | What do people say about weather during winter?                        | It gets really cold and depressing.                                                              |
+| 2   | What do students say about the quarter system?                         | It's fast paced but opportunity for more classes.                                                |
+| 3   | What is the difference in social scene between North and South campus? | North campus is louder and has more parties and South campus is quieter.                         |
+| 4   | What do students say about the cost of attending Northwestern?         | It is very expensive. Some felt it was worth it and other's didn't.                              |
+| 5   | What do students say about professors at Northwestern?                 | Professors are generally caring and willing to help students academically and with career goals. |
 
 ---
 
