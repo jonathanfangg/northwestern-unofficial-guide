@@ -78,17 +78,3 @@ def generate_answer(query: str, chunks: list[Document], model: str = GROQ_MODEL)
         ],
     )
     return response.choices[0].message.content
-
-
-if __name__ == "__main__":
-    from ingest_and_chunk import load_documents, chunk_documents
-    from embed import build_vectorstore, retrieve
-
-    docs = load_documents()
-    chunks = chunk_documents(docs)
-    vectorstore = build_vectorstore(chunks)
-
-    query = "What do students say about professors at Northwestern?"
-    retrieved = retrieve(query, vectorstore)
-    answer = generate_answer(query, retrieved)
-    print(answer)

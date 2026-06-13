@@ -59,8 +59,3 @@ def chunk_documents(
         chunk_size=chunk_size, chunk_overlap=chunk_overlap
     )
     return splitter.split_documents(documents)
-
-
-if __name__ == "__main__":
-    docs = load_documents()
-    chunks = chunk_documents(docs)

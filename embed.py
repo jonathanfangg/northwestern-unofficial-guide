@@ -87,11 +87,3 @@ def retrieve(query: str, vectorstore, k: int = TOP_K) -> list[Document]:
         A list of the k most relevant Document chunks, each with source metadata.
     """
     return vectorstore.similarity_search(query, k=k)
-
-
-if __name__ == "__main__":
-    from ingest_and_chunk import load_documents, chunk_documents
-
-    docs = load_documents()
-    chunks = chunk_documents(docs)
-    vectorstore = build_vectorstore(chunks)
