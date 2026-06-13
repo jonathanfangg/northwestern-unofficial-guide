@@ -1,9 +1,26 @@
 """Generation pipeline using Groq's llama-3.3-70b-versatile."""
 
+import os
+
+from dotenv import load_dotenv
+from groq import Groq
 from langchain_core.documents import Document
 
+load_dotenv()
+
 GROQ_MODEL = "llama-3.3-70b-versatile"
-NO_RESULTS_RESPONSE = "I don't have enough information to answer that."
+NO_RESULTS_RESPONSE = "I do not have the information to answer that."
+
+SYSTEM_PROMPT = (
+    "You are an assistant answering questions about Northwestern "
+    "University using student reviews. Answer the question using only the "
+    "context provided and do not use any outside knowledge. If the reviews "
+    "express differing or conflicting opinions, summarize the full range of "
+    "views rather than picking one side. Cite the source filename(s) for "
+    "each claim you make, e.g. (review12.txt). If the context does not "
+    f"contain enough information to answer, respond exactly with: "
+    f'"{NO_RESULTS_RESPONSE}"'
+)
 
 
 def build_prompt(query: str, chunks: list[Document]) -> str:
@@ -23,6 +40,14 @@ def build_prompt(query: str, chunks: list[Document]) -> str:
     Returns:
         A formatted prompt string ready to send to the Groq chat completion API.
     """
+    context = "\n\n".join(
+        f"[{chunk.metadata['source']}]\n{chunk.page_content}" for chunk in chunks
+    )
+    return (
+        f"Context:\n{context}\n\n"
+        f"Question: {query}\n\n"
+        "Answer the question using only the context above."
+    )
 
 
 def generate_answer(query: str, chunks: list[Document], model: str = GROQ_MODEL) -> str:
@@ -41,6 +66,18 @@ def generate_answer(query: str, chunks: list[Document], model: str = GROQ_MODEL)
     Returns:
         The generated answer text, including source attribution.
     """
+    if not chunks:
+        return NO_RESULTS_RESPONSE
+
+    client = Groq(api_key=os.environ["GROQ_API_KEY"])
+    response = client.chat.completions.create(
+        model=model,
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": build_prompt(query, chunks)},
+        ],
+    )
+    return response.choices[0].message.content
 
 
 if __name__ == "__main__":
