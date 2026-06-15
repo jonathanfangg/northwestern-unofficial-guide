@@ -27,7 +27,7 @@ Student reviews of Northwestern University sourced from Niche.com, covering acad
 
 **Overlap:** 50 characters
 
-**Reasoning:** Niche reviews vary in length from ~200 characters (short opinions) to ~1000 characters (detailed multi-topic reviews). Recursive character splitting is used over fixed-size chunking because it respects natural sentence and paragraph boundaries, splitting only when necessary and preferring cleaner breaks over random cuts mid-sentence. A 500-character cap keeps each chunk focused on one coherent thought while accommodating the average review length without splitting it at all. A 50-character overlap ensures that context is not lost at chunk boundaries for the minority of longer reviews that get split into two chunks. Semantic chunking was considered but rejected — it is computationally expensive and unnecessary for short opinion-based text where each review is already topically focused.
+**Reasoning:** Niche reviews vary in length from ~200 characters (short opinions) to ~1000 characters (detailed multi-topic reviews). Recursive character splitting is used over fixed-size chunking because it respects natural sentence and paragraph boundaries, splitting only when necessary and preferring cleaner breaks over random cuts mid-sentence. A 500-character cap keeps each chunk focused on one coherent thought while accommodating the average review length without splitting it at all. A 50-character overlap ensures that context is not lost at chunk boundaries for the minority of longer reviews that get split into two chunks. Semantic chunking was considered but rejected because it is computationally expensive and unnecessary for short reviews.
 
 ---
 
